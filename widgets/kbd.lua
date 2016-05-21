@@ -12,7 +12,7 @@ kbdcfg.switch = function ()
   kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
   local t = kbdcfg.layout[kbdcfg.current]
   kbdcfg.widget:set_text(" " .. t[3] .. " ")
-  os.execute( kbdcfg.cmd .. " " .. t[1] .. " " .. "us_dv" )-- t[2] )
+  os.execute( kbdcfg.cmd .. " " .. t[1] .. " " .. t[2] ) -- "us_dv" )-- t[2] )
 end
 
 -- Mouse bindings
