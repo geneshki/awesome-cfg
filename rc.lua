@@ -23,6 +23,8 @@ custom_widgets_setup = {}
 
 timers = {}
 
+custom_globalkeys = {}
+
 
 dofile(awful.util.getdir("config") .. "/" .. "widget_includes.lua")
 -- {{{ Error handling
@@ -241,16 +243,9 @@ root.buttons(awful.util.table.join(
 -- }}}
 
 -- {{{ Key bindings
-if globalkeys == nil then
-  if custom_globalkeys == nil then
-    globalkeys = {}
-  else
-    globalkeys = custom_globalkeys
-  end
-else
-  globalkeys = awful.util.table.join(globalkeys, custom_globalkeys)
-end
-globalkeys = awful.util.table.join(
+globalkeys = {}
+globalkeys = awful.util.table.join(globalkeys, custom_globalkeys)
+globalkeys = awful.util.table.join(globalkeys, 
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
