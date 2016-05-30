@@ -1,5 +1,5 @@
 local wibox = require "wibox"
-battery = wibox.widget.textbox()
+local battery = wibox.widget.textbox()
 function getBatteryStatus()
   local healthy='#95e454' --'#859900'
   local low='#ff0000' -- '#b58900'
