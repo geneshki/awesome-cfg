@@ -2,7 +2,7 @@ local wibox = require "wibox"
 local beautiful = require "beautiful"
 local awful = require "awful"
 local Layout = require("layout")
-kbdcfg = {}
+local kbdcfg = {}
 kbdcfg.cmd = "setxkbmap"
 kbdcfg.layout = { { "us", "dvorak" , "US_DV" }, {"bg", "", "BG"}, {"de", "", "DE"}, { "us", "" , "US" } } 
 kbdcfg.current = 1  -- us is our default layout
@@ -50,5 +50,6 @@ if custom_globalkeys == nil then
   custom_globalkeys = {}
 end
 custom_globalkeys = awful.util.table.join(custom_globalkeys,
-  awful.key({ "mod1" }, "shift", function () kbdcfg.switch() end)
+  awful.key({ "Mod1",            }, "Shift_L", function () kbdcfg.switch() end),
+  awful.key({ "Mod1",            }, "Shift_R", function () kbdcfg.switch() end)
 )
