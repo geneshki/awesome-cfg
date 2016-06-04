@@ -7,14 +7,14 @@ The `rc.lua` is enhanced to minimize its editing. Therefore you generally do not
 If you want to add a widget
 
 You need to add the widget to a table in `custom_widgets` like so:
-
+```
   custom_widgets["left"]["mywibox"]:add(mywidget)
-
+```
 in a separate lua file.
 Then add it to the `widget_includes.lua` file like so:
-
+```
   dofile("path/to/widget/file.lua")
-
+```
 Now it will show up on the left of `mywibox`
 
 ##Timers
