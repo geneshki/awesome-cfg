@@ -4,4 +4,5 @@ local cfg = awful.util.getdir("config")
 dofile(cfg .. "/widgets" .. "/kbd.lua")
 dofile(cfg .. "/widgets" .. "/battery.lua")
 dofile(cfg .. "/widgets" .. "/kbd_backlight.lua")
+dofile(cfg .. "/widgets" .. "/sound.lua")
 
