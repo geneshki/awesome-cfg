@@ -4,7 +4,7 @@ local awful = require "awful"
 local Layout = require("layout")
 local kbdcfg = {}
 kbdcfg.cmd = "setxkbmap"
-kbdcfg.layout = { { "us", "dvorak" , "US_DV" }, {"bg", "", "BG"}, {"de", "", "DE"}, { "us", "" , "US" } } 
+kbdcfg.layout = { { "us", "dvorak" , "US_DV" }, {"bg", "", "BG"}, {"de", "", "DE"}, { "us", "" , "US" }, { "tr", "", "TR" }, { "el", "", "EL"} } 
 kbdcfg.current = 1  -- us is our default layout
 kbdcfg.widget = wibox.widget.textbox()
 kbdcfg.widget:set_text(" " .. kbdcfg.layout[kbdcfg.current][3] .. " ")
@@ -13,6 +13,17 @@ kbdcfg.switch = function ()
   local t = kbdcfg.layout[kbdcfg.current]
   kbdcfg.widget:set_text(" " .. t[3] .. " ")
   os.execute( kbdcfg.cmd .. " " .. t[1] .. " " .. t[2] ) -- "us_dv" )-- t[2] )
+end
+kbdcfg.switch_back = function ()
+  -- kbdcfg.current = (kbdcfg.current + #(kbdcfg.layout) - 1) % #(kbdcfg.layout)
+  if kbdcfg.current == 1 then 
+    kbdcfg.current = #(kbdcfg.layout)
+  else
+    kbdcfg.current = kbdcfg.current - 1
+  end
+  local t = kbdcfg.layout[kbdcfg.current]
+  kbdcfg.widget:set_text(" " .. t[3] .. " ")
+  os.execute( kbdcfg.cmd .. " " .. t[1] .. " " .. t[2] )
 end
 
 -- Mouse bindings
@@ -51,5 +62,7 @@ if custom_globalkeys == nil then
 end
 custom_globalkeys = awful.util.table.join(custom_globalkeys,
   awful.key({ "Mod1",            }, "Shift_L", function () kbdcfg.switch() end),
-  awful.key({ "Mod1",            }, "Shift_R", function () kbdcfg.switch() end)
+  awful.key({ "Mod1",            }, "Shift_R", function () kbdcfg.switch() end),
+  awful.key({ "Mod1", "Control"  }, "Shift_L", function () kbdcfg.switch_back() end),
+  awful.key({ "Mod1", "Control"  }, "Shift_R", function () kbdcfg.switch_back() end)
 )
