@@ -6,13 +6,21 @@ local kbdcfg = {}
 kbdcfg.cmd = "setxkbmap"
 kbdcfg.layout = { { "us", "dvorak" , "US_DV" }, {"bg", "", "BG"}, {"de", "", "DE"}, { "us", "" , "US" }, { "tr", "", "TR" }, { "el", "", "EL"} } 
 kbdcfg.current = 1  -- us is our default layout
+kbdcfg.previous = 1 -- used to return to previous layout on screen_unlock signal
 kbdcfg.widget = wibox.widget.textbox()
 kbdcfg.widget:set_text(" " .. kbdcfg.layout[kbdcfg.current][3] .. " ")
+
+kbdcfg.set_layout = function (kbd_layout) 
+  kbdcfg.previous = kbdcfg.current
+  kbdcfg.widget:set_text(" " .. kbd_layout[3] .. " ")
+  os.execute( kbdcfg.cmd .. " " .. kbd_layout[1] .. " " .. kbd_layout[2] )
+end
 kbdcfg.switch = function ()
   kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
   local t = kbdcfg.layout[kbdcfg.current]
-  kbdcfg.widget:set_text(" " .. t[3] .. " ")
-  os.execute( kbdcfg.cmd .. " " .. t[1] .. " " .. t[2] ) -- "us_dv" )-- t[2] )
+  kbdcfg.set_layout(t)
+  -- kbdcfg.widget:set_text(" " .. t[3] .. " ")
+  -- os.execute( kbdcfg.cmd .. " " .. t[1] .. " " .. t[2] ) -- "us_dv" )-- t[2] )
 end
 kbdcfg.switch_back = function ()
   -- kbdcfg.current = (kbdcfg.current + #(kbdcfg.layout) - 1) % #(kbdcfg.layout)
@@ -22,14 +30,22 @@ kbdcfg.switch_back = function ()
     kbdcfg.current = kbdcfg.current - 1
   end
   local t = kbdcfg.layout[kbdcfg.current]
-  kbdcfg.widget:set_text(" " .. t[3] .. " ")
-  os.execute( kbdcfg.cmd .. " " .. t[1] .. " " .. t[2] )
+  kbdcfg.set_layout(t)
+  -- kbdcfg.widget:set_text(" " .. t[3] .. " ")
+  -- os.execute( kbdcfg.cmd .. " " .. t[1] .. " " .. t[2] )
 end
+kbdcfg.get_prev_layout = function ()
+  return kbdcfg.layout[kbdcfg.previous]
+end
+
 
 -- Mouse bindings
 kbdcfg.widget:buttons(
  awful.util.table.join(awful.button({ }, 1, function () kbdcfg.switch() end))
 )
+-- signal bindings
+awesome.connect_signal('screen_lock', function () kbdcfg.set_layout(kbdcfg.layout[1]) end)
+awesome.connect_signal('screen_unlock', function () kbdcfg.set_layout(kbdcfg.get_prev_layout()) end)
 
 --[[
 local kbdwidget = wibox.widget.textbox(" Eng ")
