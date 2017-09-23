@@ -1,5 +1,5 @@
-local Layout = {}
-function Layout:new()
+local ngLayout = {}
+function ngLayout:new()
   local layout = {}
   layout.prototype = {count=0}
   setmetatable(layout, self)
@@ -7,10 +7,10 @@ function Layout:new()
   layout.widgets = {}
   return layout
 end
-function Layout:get_count()
+function ngLayout:get_count()
   return self.prototype.count
 end
-function Layout:add(o, ind)
+function ngLayout:add(o, ind)
   local result = 0
   if ind == nil then
     table.insert(self.widgets, o)
@@ -22,7 +22,7 @@ function Layout:add(o, ind)
   self.prototype.count = self.prototype.count + 1
   return result
 end
-function Layout:remove(ind)
+function ngLayout:remove(ind)
   local result
   if self.prototype.count == 0 then
     return nil
@@ -35,7 +35,10 @@ function Layout:remove(ind)
   self.prototype.count = self.prototype.count - 1
   return result
 end
-function Layout:get_widget(ind)
+function ngLayout:get_widget(ind)
   return self.widgets[ind]
 end
-return Layout
+function ngLayout:get_widgets()
+  return self.widgets
+end
+return ngLayout

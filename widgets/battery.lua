@@ -1,5 +1,6 @@
 local wibox = require "wibox"
 local battery = wibox.widget.textbox()
+local ngLayout = require("ngLayout")
 function getBatteryStatus()
   local healthy='#95e454' --'#859900'
   local low='#ff0000' -- '#b58900'
@@ -46,7 +47,7 @@ end
 
 -- battery:set_markup(getBatteryStatus())
 if custom_widgets["right"]["mywibox"] == nil then
-  custom_widgets["right"]["mywibox"] = Layout:new()
+  custom_widgets["right"]["mywibox"] = ngLayout:new()
 end
 custom_widgets["right"]["mywibox"]:add(battery)
 

@@ -1,7 +1,7 @@
 local wibox = require "wibox"
 local beautiful = require "beautiful"
 local awful = require "awful"
-local Layout = require("layout")
+local ngLayout = require("ngLayout")
 
 -- local apw = require(soundcfg
 local apw_dir = awful.util.getdir("config") .. "/widgets/apw"
@@ -13,7 +13,7 @@ naughty.notify({ preset = naughty.config.presets.critical,
 local apw = dofile(apw_dir .."/widget.lua")
 -- add the widget to the right wibox panel
 if custom_widgets["right"]["mywibox"] == nil then
-  custom_widgets["right"]["mywibox"] = Layout:new()
+  custom_widgets["right"]["mywibox"] = ngLayout:new()
 end
 custom_widgets["right"]["mywibox"]:add(apw)
 
@@ -24,5 +24,8 @@ end
 custom_globalkeys = awful.util.table.join(custom_globalkeys,
   awful.key({ }, "XF86AudioRaiseVolume",  apw.Up),
   awful.key({ }, "XF86AudioLowerVolume",  apw.Down),
-  awful.key({ }, "XF86AudioMute",         apw.ToggleMute)
+  awful.key({ }, "XF86AudioMute",         apw.ToggleMute),
+  awful.key({"Mod4"}, "F6",                 apw.Up),
+  awful.key({"Mod4"}, "F5",                 apw.Down),
+  awful.key({"Mod4"}, "F7",                 apw.ToggleMute)
 )
